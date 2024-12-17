@@ -20,3 +20,7 @@ Calling ArgUI should be possible from outside your application to provide two ne
 
 1. Allow you to generate a new entry point that will create the CLI for both interactive and non-interactive modes based on a config
 2. Launch a TUI based on the config without needing to generate anything based upon that config
+
+## Covered Cases
+
+The scripts within the `test_cases` directory should be covered by this functionality
