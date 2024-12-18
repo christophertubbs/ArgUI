@@ -83,6 +83,194 @@ a pattern like `parser_create.set_defaults(func=handler)`, then calling `paramet
 
 The intended pattern needs to be established.
 
+## Parser Structure
+
+The key ArgumentParser looks like:
+
+```yaml
+parser:
+    description: "\nA complex example of how to use the argument parser\n"
+    epilog: null
+    prog: "ArgParse Example"
+    usage: null
+    _actions:
+        # This will be a `_HelpAction`
+        -   choices: null
+            option_strings:
+                - "-h"
+                - "--help"
+            default: "==SUPPRESS=="
+            dest: "help"
+            help: "show this message and exit"
+            type: null
+            required: false
+        # This will be a `_StoreTrueAction`
+        -   choices: null
+            option_strings:
+                - "-i"
+                - "--interactive"
+            default: false
+            dest: "interactive"
+            help: "Launch the application in an interactive mode"
+            required: false
+        # This will be a `_SubParsersAction`
+        -   dest: "command"
+            default: null,
+            required: true,
+            option_strings:
+            choices:
+                # This will be an `ArgumentParser`
+                create:
+                    description: null
+                    epilog: null
+                    prog: "ArgParse Example create"
+                    usage: null
+                    _defaults:
+                        func: "<function create_file_or_dir>"
+                    _actions:
+                        # This will be a `_HelpAction`
+                        -   choices: null
+                            option_strings:
+                                - "-h"
+                                - "--help"
+                            default: "==SUPPRESS=="
+                            dest: "help"
+                            help: "show this message and exit"
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                                - "file"
+                                - "dir"
+                            option_strings:
+                                - "--type"
+                            dest: "type"
+                            help: "Type of item to create"
+                            default: null
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices: 
+                            option_strings:
+                            dest: "name"
+                            help: "Name of file or directory to create"
+                            default: null
+                            type: null
+                            required: true
+                        # This will be a `_StoreAction`
+                        -   choices: null
+                            option_strings:
+                                - "--content"
+                            dest: "content"
+                            help: "Content to write to a file (only valid for files)"
+                            default: null
+                            type: null
+                            required: false
+                # This will be an `ArgumentParser`
+                delete:
+                    description: null
+                    epilog: null
+                    prog: "ArgParse Example delete"
+                    usage: null
+                    _defaults:
+                    func: "<function delete_file_or_dir>"
+                    _actions:
+                        # This will be a `_HelpAction`
+                        -   choices: null
+                            option_strings:
+                                - "-h"
+                                - "--help"
+                            default: "==SUPPRESS=="
+                            dest: "help"
+                            help: "show this message and exit"
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                            option_strings:
+                            dest: "name"
+                            help: "Name of file or directory to delete"
+                            default: null
+                            type: null
+                            required: true
+                # This will be an `ArgumentParser`
+                list:
+                    description: null
+                    epilog: null
+                    prog: "ArgParse Example list"
+                    usage: null
+                    _defaults:
+                        func: "<function list_files>"
+                    _actions:
+                        # This will be a `_HelpAction`
+                        -   choices: null
+                            option_strings:
+                                - "-h"
+                                - "--help"
+                            default: "==SUPPRESS=="
+                            dest: "help"
+                            help: "show this message and exit"
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                                - "file"
+                                - "dir"
+                            option_strings:
+                                - "--type"
+                            dest: "type"
+                            help: "Filter by type (file or directory)"
+                            default: null
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                            option_strings:
+                                - "--path"
+                            dest: "path"
+                            help: "Path to list files or directories from"
+                            default: "."
+                            type: null
+                            required: false
+                # This will be an `ArgumentParser`
+                copy:
+                    description: null
+                    epilog: null
+                    prog: "ArgParse Example copy"
+                    usage: null
+                    _defaults:
+                        func: "<function copy_file>"
+                    _actions:
+                        # This will be a `_HelpAction`
+                        -   choices: null
+                            option_strings:
+                                - "-h"
+                                - "--help"
+                            default: "==SUPPRESS=="
+                            dest: "help"
+                            help: "show this message and exit"
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                            option_strings: null
+                            dest: "source"
+                            default: null
+                            help: "destination file or directory for the copy"
+                            type: "<pathlib.Path>"
+                            required: true
+                        # This will be a `_StoreAction`
+                        -   choices:
+                            option_strings: null
+                            default: null
+                            dest: "destination"
+                            help: "destination file or directory for the copy"
+                            type: "<pathlib.Path>"
+                            required: true                    
+```
+
+Expect these fields to be available to work with
+
 ## Hints
 
 It's probably safest to go into `interactive` mode by looking for the appropriate `-i` flag rather than by grabbing it from parsed

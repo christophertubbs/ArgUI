@@ -1,0 +1,179 @@
+parser:   # type: ArgumentParser
+    description: "\nA complex example of how to use the argument parser\n"  # type: str
+    epilog: null  # type: str
+    prog: "ArgParse Example"  # type: str
+    usage: null # type: str
+    _actions: # type: List[Action]
+        # This will be a `_HelpAction`
+        -   choices: null # type: Dict[str, typing.Any]
+            option_strings: # type: List[str]
+                - "-h"
+                - "--help"
+            default: "==SUPPRESS==" # type: Any
+            dest: "help"  # type: str
+            help: "show this message and exit" # type: str
+            type: null  # type: type | Callable[[str], Any]
+            required: false # type: bool
+        # This will be a `_StoreTrueAction`
+        -   choices: null # type: Dict[str, typing.Any]
+            option_strings: # type: List[str]
+                - "-i"
+                - "--interactive"
+            default: false  # type: Any
+            dest: "interactive" # type: str
+            help: "Launch the application in an interactive mode" # type: str
+            required: false # type: bool
+        # This will be a `_SubParsersAction`
+        -   dest: "command" # type: str
+            default: null, # type: Any
+            required: true, # type: bool
+            option_strings: # type: List[str]
+            choices: # type: Dict[str, ArgumentParser]
+                # This will be an `ArgumentParser`
+                create:
+                    description: null # type: str
+                    epilog: null # type: str
+                    prog: "ArgParse Example create" # type: str
+                    usage: null # type: str
+                    _defaults:  # Dict[str, typing.Any]
+                        func: "<function create_file_or_dir>"
+                    _actions: # type: List[Action]
+                        # This will be a `_HelpAction`
+                        -   choices: null # type: List
+                            option_strings: # type: List[str]
+                                - "-h"
+                                - "--help"
+                            default: "==SUPPRESS==" # type: str
+                            dest: "help" # type: str
+                            help: "show this message and exit" # type: str
+                            type: null # type: type | Callable[[str], Any]
+                            required: false # type: bool
+                        # This will be a `_StoreAction`
+                        -   choices: # type: List[str]
+                                - "file"
+                                - "dir"
+                            option_strings: # type: List[str]
+                                - "--type"
+                            dest: "type" # type: str
+                            help: "Type of item to create" # type: str
+                            default: null # type: Any
+                            type: null # type: type | Callable[[str], Any]
+                            required: false # type: bool
+                        # This will be a `_StoreAction`
+                        -   choices: # type: List
+                            option_strings: # type: List[str]
+                            dest: "name"  # type: str
+                            help: "Name of file or directory to create" # type: str
+                            default: null # type: Any
+                            type: null # type: type | Callable[[str], Any]
+                            required: true # type: bool
+                        # This will be a `_StoreAction`
+                        -   choices: null # type: List
+                            option_strings: # type: List[str]
+                                - "--content"
+                            dest: "content" # type: str
+                            help: "Content to write to a file (only valid for files)" # type: str
+                            default: null # type: Any
+                            type: null # type: type | Callable[[str], Any]
+                            required: false # type: bool
+                # This will be an `ArgumentParser`
+                delete:
+                    description: null
+                    epilog: null
+                    prog: "ArgParse Example delete"
+                    usage: null
+                    _defaults:
+                    func: "<function delete_file_or_dir>"
+                    _actions:
+                        # This will be a `_HelpAction`
+                        -   choices: null
+                            option_strings:
+                                - "-h"
+                                - "--help"
+                            default: "==SUPPRESS=="
+                            dest: "help"
+                            help: "show this message and exit"
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                            option_strings:
+                            dest: "name"
+                            help: "Name of file or directory to delete"
+                            default: null
+                            type: null
+                            required: true
+                # This will be an `ArgumentParser`
+                list:
+                    description: null
+                    epilog: null
+                    prog: "ArgParse Example list"
+                    usage: null
+                    _defaults:
+                        func: "<function list_files>"
+                    _actions:
+                        # This will be a `_HelpAction`
+                        -   choices: null
+                            option_strings:
+                                - "-h"
+                                - "--help"
+                            default: "==SUPPRESS=="
+                            dest: "help"
+                            help: "show this message and exit"
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                                - "file"
+                                - "dir"
+                            option_strings:
+                                - "--type"
+                            dest: "type"
+                            help: "Filter by type (file or directory)"
+                            default: null
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                            option_strings:
+                                - "--path"
+                            dest: "path"
+                            help: "Path to list files or directories from"
+                            default: "."
+                            type: null
+                            required: false
+                # This will be an `ArgumentParser`
+                copy:
+                    description: null
+                    epilog: null
+                    prog: "ArgParse Example copy"
+                    usage: null
+                    _defaults:
+                        func: "<function copy_file>"
+                    _actions:
+                        # This will be a `_HelpAction`
+                        -   choices: null
+                            option_strings:
+                                - "-h"
+                                - "--help"
+                            default: "==SUPPRESS=="
+                            dest: "help"
+                            help: "show this message and exit"
+                            type: null
+                            required: false
+                        # This will be a `_StoreAction`
+                        -   choices:
+                            option_strings: null
+                            dest: "source"
+                            default: null
+                            help: "destination file or directory for the copy"
+                            type: "<pathlib.Path>"
+                            required: true
+                        # This will be a `_StoreAction`
+                        -   choices:
+                            option_strings: null
+                            default: null
+                            dest: "destination"
+                            help: "destination file or directory for the copy"
+                            type: "<pathlib.Path>"
+                            required: true       
