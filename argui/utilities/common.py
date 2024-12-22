@@ -5,8 +5,12 @@ import typing
 import types
 
 _SENTINEL = object()
+"""Representative of 'null' for when 'None' is a valid value"""
 
-def get_element_by_name(name: str, context: typing.Union[typing.Dict[str, typing.Any], types.ModuleType] = None) -> typing.Any:
+def get_element_by_name(
+    name: str,
+    context: typing.Union[typing.Dict[str, typing.Any], types.ModuleType] = None
+) -> typing.Any:
     """
     Try to find an object by its name within the current code context
 
@@ -40,13 +44,13 @@ def get_element_by_name(name: str, context: typing.Union[typing.Dict[str, typing
         """
         if key is None:
             return False
-        
+
         if not isinstance(current_context, (typing.Mapping, types.ModuleType)):
             raise TypeError(
                 "Cannot search for an element in the given context - only maps and modules "
                 f"may be traversed and encountered a {type(current_context)}"
             )
-        
+
         if isinstance(context_to_search, typing.Mapping):
             return key in context_to_search
         
